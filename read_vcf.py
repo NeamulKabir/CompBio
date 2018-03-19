@@ -1,8 +1,10 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.metrics import precision_recall_fscore_support
 
-tumor_name = 'syn1'
+tumor_name = 'real1'
+print('Data:{}'.format(tumor_name))
 
 truth_file = tumor_name + '/' + tumor_name + '_truth.bed'
 freebayes_file = tumor_name + '/' + tumor_name + '_freebayes.vcf'
@@ -99,15 +101,15 @@ varscan_set = set(varscan_list)
 
 set_list=[truth_set,freebayes_set,mutect_set,vardict_set,varscan_set]
 m = len(set_list)
-intersection_count = np.zeros((m,m))
-for i in range(m):
-	first_set = set_list[i]
-	intersection_count[i,i] = len(first_set)
-	for j in range(i+1,m):
-		second_set = set_list[j]
-		intersection_count[i,j] = len(first_set.intersection(second_set))
+# intersection_count = np.zeros((m,m))
+# for i in range(m):
+# 	first_set = set_list[i]
+# 	intersection_count[i,i] = len(first_set)
+# 	for j in range(i+1,m):
+# 		second_set = set_list[j]
+# 		intersection_count[i,j] = len(first_set.intersection(second_set))
 
-print(intersection_count)
+# print(intersection_count)
 
 union_set = freebayes_set | mutect_set | vardict_set | varscan_set
 sorted_union_list = sorted(list(union_set))
@@ -121,22 +123,34 @@ for i in range(num_preds):
 		if key in set_list[j]:
 			labels[i,j] = 1
 
-labels_file = tumor_name + '/' + tumor_name +'_labels.txt'
-with open(labels_file,'a') as f_labels_file:
-	f_labels_file.write('chrom\tloc\ttruth\tfreebayes\tmutect\tvardict\tvarscan\n')
-	for i in range(num_preds):
-		key = sorted_union_list[i]
-		chrom = key.split('_')[0]
-		loc = key.split('_')[1]
-		f_labels_file.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom,loc,labels[i,0],labels[i,1],labels[i,2],labels[i,3],labels[i,4]))
+# labels_file = tumor_name + '/' + tumor_name +'_labels.txt'
+# with open(labels_file,'a') as f_labels_file:
+# 	f_labels_file.write('chrom\tloc\ttruth\tfreebayes\tmutect\tvardict\tvarscan\n')
+# 	for i in range(num_preds):
+# 		key = sorted_union_list[i]
+# 		chrom = key.split('_')[0]
+# 		loc = key.split('_')[1]
+# 		f_labels_file.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom,loc,labels[i,0],labels[i,1],labels[i,2],labels[i,3],labels[i,4]))
 
 
+############## FREEBAYES ##############
+precision, recall, f1_score, _ = precision_recall_fscore_support(labels[:,0], labels[:,1], average='macro')
+print('############## FREEBAYES ##############')
+print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
 
+############## MUTECT ##############
+precision, recall, f1_score, _ = precision_recall_fscore_support(labels[:,0], labels[:,2], average='macro')
+print('############## MUTECT ##############')
+print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
 
+############## VARDICT ##############
+precision, recall, f1_score, _ = precision_recall_fscore_support(labels[:,0], labels[:,3], average='macro')
+print('############## VARDICT ##############')
+print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
 
-
-
-
-
+############## VARSCAN ##############
+precision, recall, f1_score, _ = precision_recall_fscore_support(labels[:,0], labels[:,4], average='macro')
+print('############## VARSCAN ##############')
+print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
 
 
