@@ -99,15 +99,15 @@ varscan_set = set(varscan_list)
 
 set_list=[truth_set,freebayes_set,mutect_set,vardict_set,varscan_set]
 m = len(set_list)
-# intersection_count = np.zeros((m,m))
-# for i in range(m):
-# 	first_set = set_list[i]
-# 	intersection_count[i,i] = len(first_set)
-# 	for j in range(i+1,m):
-# 		second_set = set_list[j]
-# 		intersection_count[i,j] = len(first_set.intersection(second_set))
+intersection_count = np.zeros((m,m))
+for i in range(m):
+	first_set = set_list[i]
+	intersection_count[i,i] = len(first_set)
+	for j in range(i+1,m):
+		second_set = set_list[j]
+		intersection_count[i,j] = len(first_set.intersection(second_set))
 
-# print(intersection_count)
+print(intersection_count)
 
 union_set = freebayes_set | mutect_set | vardict_set | varscan_set
 sorted_union_list = sorted(list(union_set))
