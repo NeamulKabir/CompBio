@@ -14,7 +14,7 @@ def precision_recall_fscore(truth_label, predicted_label):
 	return precision, recall, fscore
 
 
-tumor_name = 'syn5'
+tumor_name = 'real2'
 print('Data:{}'.format(tumor_name))
 
 truth_file = tumor_name + '/' + tumor_name + '_truth.bed'
@@ -144,25 +144,65 @@ with open(labels_file,'w') as f_labels_file:
 		f_labels_file.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom,loc,labels[i,0],labels[i,1],labels[i,2],labels[i,3],labels[i,4]))
 
 
+# ############## FREEBAYES ##############
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,1])
+# print('############## FREEBAYES ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
+# ############## MUTECT ##############
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,2])
+# print('############## MUTECT ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
+# ############## VARDICT ##############
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,3])
+# print('############## VARDICT ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
+# ############## VARSCAN ##############
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,4])
+# print('############## VARSCAN ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
+
+# label_sum = np.sum(labels[:,1:],axis=1)
+# ############## VOTING: at least 2 of 4 ##############
+# temp_label = np.where(label_sum >= 2,1,0)
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], temp_label)
+# print('############## VOTING: at least 2 of 4 ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
+# ############## VOTING: at least 3 of 4 ##############
+# temp_label = np.where(label_sum >= 3,1,0)
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], temp_label)
+# print('############## VOTING: at least 3 of 4 ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
+# ############## VOTING: all 4 ##############
+# temp_label = np.where(label_sum >= 4,1,0)
+# precision, recall, f1_score = precision_recall_fscore(labels[:,0], temp_label)
+# print('############## VOTING: all 4 ##############')
+# print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+
 ############## FREEBAYES ##############
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,1])
 print('############## FREEBAYES ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 ############## MUTECT ##############
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,2])
 print('############## MUTECT ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 ############## VARDICT ##############
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,3])
 print('############## VARDICT ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 ############## VARSCAN ##############
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], labels[:,4])
 print('############## VARSCAN ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 
 label_sum = np.sum(labels[:,1:],axis=1)
@@ -170,20 +210,18 @@ label_sum = np.sum(labels[:,1:],axis=1)
 temp_label = np.where(label_sum >= 2,1,0)
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], temp_label)
 print('############## VOTING: at least 2 of 4 ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 ############## VOTING: at least 3 of 4 ##############
 temp_label = np.where(label_sum >= 3,1,0)
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], temp_label)
 print('############## VOTING: at least 3 of 4 ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 ############## VOTING: all 4 ##############
 temp_label = np.where(label_sum >= 4,1,0)
 precision, recall, f1_score = precision_recall_fscore(labels[:,0], temp_label)
 print('############## VOTING: all 4 ##############')
-print('precision:{:.3f}, recall:{:.3f}, f1_score:{:.3f}\n'.format(precision,recall,f1_score))
-
-
+print('{:.3f}\n{:.3f}\n{:.3f}\n\n'.format(precision,recall,f1_score))
 
 
