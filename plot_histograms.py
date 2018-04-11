@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-feature_names = ['GT_AF','GT_BIAS_REF','GT_BIAS_ALT','GT_DP','GT_GQ','AB','AC','AF','BaseQRankSum','FS','GC','HaplotypeScore','MQ','MQRanksum','ReadPosRakSum','chrom','loc']
+feature_names = ['GT_AF','GT_BIAS_REF','GT_BIAS_ALT','GT_DP','GT_GQ','AB','AC','AF','BaseQRankSum','DP','FS','GC','HaplotypeScore','MQ','MQRanksum','ReadPosRakSum','chrom','loc']
 
 # tumor_names = ['real1','syn1','syn2','syn3','syn4','syn5']
 # file_names = ['freebayes','mutect','vardict','varscan']
