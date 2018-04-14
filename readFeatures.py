@@ -15,7 +15,7 @@ def getGenData(sample, index):
 # tumor_names = ['real1','syn1','syn2','syn3','syn4','syn5']
 file_names = ['freebayes','mutect','vardict','varscan']
 
-tumor_names = ['real2']
+tumor_names = ['syn1']
 # file_names = ['varscan']
 
 for tumor_name in tumor_names:
