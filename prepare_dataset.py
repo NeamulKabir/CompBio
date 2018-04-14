@@ -1,5 +1,5 @@
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 
 def precision_recall_fscore(truth_label, predicted_label):
@@ -13,9 +13,11 @@ def precision_recall_fscore(truth_label, predicted_label):
 
 	return precision, recall, fscore
 
-feature_names = ['GT_AF','GT_BIAS_REF','GT_BIAS_ALT','GT_DP','GT_GQ','AB','AC','AF','BaseQRankSum','DP','FS','GC','HaplotypeScore','MQ','MQRanksum','ReadPosRankSum','chrom','loc']
+# feature_names = ['GT_AF','GT_BIAS_REF','GT_BIAS_ALT','GT_DP','GT_GQ','AB','AC','AF','BaseQRankSum','DP','FS','GC','HaplotypeScore','MQ','MQRanksum','ReadPosRankSum','chrom','loc']
 
-tumor_name = 'real1'
+feature_names = ['GT_AD_REF,','GT_AD_ALT','GT_ADJAF','GT_AF','GT_ALD_FOR','GT_ALD_REV','GT_BIAS_REF','GT_BIAS_ALT','GT_BQ','GT_DP','GT_DP4_1','GT_DP4_2','GT_DP4_3','GT_DP4_4','GT_FREQ','GT_GQ','GT_HIAF','GT_MQ','GT_NM','GT_ODDRATIO','GT_PL1','GT_PL2','GT_PL3','GT_PMEAN','GT_PSTD','GT_QSTD','GT_QUAL','GT_RD1','GT_RD2','GT_RO','GT_SBF','GT_SN','GT_SS','GT_VD','QUAL','AB','ABP','AC','AF','AN','AO','BaseQRankSum','DP','DPB','DPRA','EPP','EPPR','FS','GC','GPV','GTI','Hrun','HaplotypeScore','LEN','MEANALT','MQ','MQ0','MQM','MQMR','MQRankSum','MSI','MSILEN','NS','NUMALT','ODDS','PAIRED','PAIREDR','PAO','PQA','PQR','PRO','QA','QD','QR','RO','RPL','RPP','RPPR','RPR','RUN','ReadPosRankSum','SAF','SAP','SAR','SOR','SPV','SRF','SRP','SRR','SS','SSC','SSF','CHROM','POS']
+
+tumor_name = 'real2'
 print('Data:{}'.format(tumor_name))
 
 truth_file = tumor_name + '/' + tumor_name + '_truth.bed'
@@ -73,6 +75,8 @@ with open(freebayes_file,'r') as f_freebayes_file:
 		freebayes_mask_dict[key] = mask[count,valid_cols_freebayes]
 		# print(freebayes_mask_dict[key])
 
+		count += 1
+
 freebayes_set = set(freebayes_list)
 
 
@@ -103,6 +107,8 @@ with open(mutect_file,'r') as f_mutect_file:
 		mutect_mask_dict[key] = mask[count,valid_cols_mutect]
 		# print(mutect_mask_dict[key])
 
+		count += 1
+
 mutect_set = set(mutect_list)
 
 # ############## VARDICT ##############
@@ -132,6 +138,8 @@ with open(vardict_file,'r') as f_vardict_file:
 		vardict_mask_dict[key] = mask[count,valid_cols_vardict]
 		# print(vardict_mask_dict[key])
 
+		count += 1
+
 vardict_set = set(vardict_list)
 
 # ############## VARSCAN ##############
@@ -160,6 +168,8 @@ with open(varscan_file,'r') as f_varscan_file:
 		# print(varscan_data_dict[key])
 		varscan_mask_dict[key] = mask[count,valid_cols_varscan]
 		# print(varscan_mask_dict[key])
+
+		count += 1
 
 varscan_set = set(varscan_list)
 
