@@ -12,11 +12,11 @@ def getGenData(sample, index):
 
 
 
-# tumor_names = ['real1','syn1','syn2','syn3','syn4','syn5']
+tumor_names = ['real1','real2','syn1','syn2','syn3','syn4','syn5']
 file_names = ['freebayes','mutect','vardict','varscan']
 
-tumor_names = ['syn1']
-# file_names = ['varscan']
+# tumor_names = ['real2']
+# file_names = ['vardict']
 
 for tumor_name in tumor_names:
 	for file_name in file_names:
@@ -35,8 +35,8 @@ for tumor_name in tumor_names:
 			templist = list()
 			tempMaskedList = list()
 
-			if record.CHROM == 'X' or record.CHROM =='Y':
-				continue
+			# if record.CHROM == 'X' or record.CHROM =='Y':
+			# 	continue
 
 			GTflag = False
 			for sample in record.samples:
@@ -154,12 +154,20 @@ for tumor_name in tumor_names:
 
 					data, flag = getGenData(sample,'PL')
 					if flag == 0:
-						templist.append(data[0])
-						templist.append(data[1])
-						templist.append(data[2])
-						tempMaskedList.append(flag)
-						tempMaskedList.append(flag)
-						tempMaskedList.append(flag)
+						if record.CHROM =='Y':
+							templist.append(data[0])
+							templist.append(data[1])
+							templist.append(0)
+							tempMaskedList.append(flag)
+							tempMaskedList.append(flag)
+							tempMaskedList.append(1)
+						else:
+							templist.append(data[0])
+							templist.append(data[1])
+							templist.append(data[2])
+							tempMaskedList.append(flag)
+							tempMaskedList.append(flag)
+							tempMaskedList.append(flag)
 					else:
 						templist.append(0)
 						templist.append(0)
@@ -546,30 +554,56 @@ for tumor_name in tumor_names:
 				else:
 					missingCount['MQRankSum'] += 1
 			templist.append(data)
+			
+			if tumor_name == 'syn1':
+				try:
+					data = record.INFO['MSI']
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'MSI' not in missingCount:
+						missingCount['MSI'] = 1
+					else:
+						missingCount['MSI'] += 1
+				templist.append(data)
+			else:
+				try:
+					data = record.INFO['MSI'][0]
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'MSI' not in missingCount:
+						missingCount['MSI'] = 1
+					else:
+						missingCount['MSI'] += 1
+				templist.append(data)
 
-			try:
-				data = record.INFO['MSI'][0]
-				tempMaskedList.append(0)
-			except:
-				tempMaskedList.append(1)
-				data = 0
-				if 'MSI' not in missingCount:
-					missingCount['MSI'] = 1
-				else:
-					missingCount['MSI'] += 1
-			templist.append(data)
-
-			try:
-				data = record.INFO['MSILEN'][0]
-				tempMaskedList.append(0)
-			except:
-				tempMaskedList.append(1)
-				data = 0
-				if 'MSILEN' not in missingCount:
-					missingCount['MSILEN'] = 1
-				else:
-					missingCount['MSILEN'] += 1
-			templist.append(data)
+			if tumor_name == 'syn1':
+				try:
+					data = record.INFO['MSILEN']
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'MSILEN' not in missingCount:
+						missingCount['MSILEN'] = 1
+					else:
+						missingCount['MSILEN'] += 1
+				templist.append(data)
+			else:
+				try:
+					data = record.INFO['MSILEN'][0]
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'MSILEN' not in missingCount:
+						missingCount['MSILEN'] = 1
+					else:
+						missingCount['MSILEN'] += 1
+				templist.append(data)
 
 			try:
 				data = record.INFO['NS']
@@ -834,17 +868,31 @@ for tumor_name in tumor_names:
 					missingCount['SAR'] = 1
 				else:
 					missingCount['SAR'] += 1
-			try:
-				data = record.INFO['SOR'][0]
-				tempMaskedList.append(0)
-			except:
-				tempMaskedList.append(1)
-				data = 0
-				if 'SOR' not in missingCount:
-					missingCount['SOR'] = 1
-				else:
-					missingCount['SOR'] += 1
-			templist.append(data)
+			
+			if tumor_name == 'syn1':
+				try:
+					data = record.INFO['SOR']
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'SOR' not in missingCount:
+						missingCount['SOR'] = 1
+					else:
+						missingCount['SOR'] += 1
+				templist.append(data)
+			else:
+				try:
+					data = record.INFO['SOR'][0]
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'SOR' not in missingCount:
+						missingCount['SOR'] = 1
+					else:
+						missingCount['SOR'] += 1
+				templist.append(data)
 
 			try:
 				data = record.INFO['SPV']
@@ -918,19 +966,38 @@ for tumor_name in tumor_names:
 					missingCount['SSC'] += 1
 			templist.append(data)
 
-			try:
-				data = record.INFO['SSF'][0]
-				tempMaskedList.append(0)
-			except:
-				tempMaskedList.append(1)
-				data = 0
-				if 'SSF' not in missingCount:
-					missingCount['SSF'] = 1
-				else:
-					missingCount['SSF'] += 1
-			templist.append(data)
+			if tumor_name == 'syn1':
+				try:
+					data = record.INFO['SSF']
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'SSF' not in missingCount:
+						missingCount['SSF'] = 1
+					else:
+						missingCount['SSF'] += 1
+				templist.append(data)
+			else:
+				try:
+					data = record.INFO['SSF'][0]
+					tempMaskedList.append(0)
+				except:
+					tempMaskedList.append(1)
+					data = 0
+					if 'SSF' not in missingCount:
+						missingCount['SSF'] = 1
+					else:
+						missingCount['SSF'] += 1
+				templist.append(data)
 
-			templist.append(record.CHROM)
+			if record.CHROM == 'X':
+				templist.append(23)
+			elif record.CHROM =='Y':
+				templist.append(24)
+			else:
+				templist.append(record.CHROM)
+
 			templist.append(record.POS)
 
 			feature.append(templist)
