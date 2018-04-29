@@ -68,16 +68,16 @@ for tumor_name in tumor_names:
 	
 
 	# Remove missing data rows
-	clean_dataset = np.delete(dataset, missing_ind, axis=0)
-	clean_mask = np.hstack((np.zeros((len(clean_dataset),4),dtype=np.int),np.delete(mask, missing_ind, axis=0)))
-	print('Shape of clean_dataset:{}'.format(clean_dataset.shape))
-	print('Shape of clean_mask:{}'.format(clean_mask.shape))
-
-	# Do not remove missing data rows
-	# clean_dataset = dataset
-	# clean_mask = np.hstack((np.zeros((len(clean_dataset),4),dtype=np.int),mask))
+	# clean_dataset = np.delete(dataset, missing_ind, axis=0)
+	# clean_mask = np.hstack((np.zeros((len(clean_dataset),4),dtype=np.int),np.delete(mask, missing_ind, axis=0)))
 	# print('Shape of clean_dataset:{}'.format(clean_dataset.shape))
 	# print('Shape of clean_mask:{}'.format(clean_mask.shape))
+
+	# Do not remove missing data rows
+	clean_dataset = dataset
+	clean_mask = np.hstack((np.zeros((len(clean_dataset),4),dtype=np.int),mask))
+	print('Shape of clean_dataset:{}'.format(clean_dataset.shape))
+	print('Shape of clean_mask:{}'.format(clean_mask.shape))
 
 	positive_ind = np.where(clean_dataset[:,2] == 1)[0]
 	negative_ind = np.where(clean_dataset[:,2] == 0)[0]
@@ -106,16 +106,27 @@ for tumor_name in tumor_names:
 	np.random.shuffle(train_ind)
 	np.random.shuffle(val_ind)
 
+	# Remove missing data rows
+	# train_chrom_filename = tumor_name + '/' + tumor_name + '_train_chrom_cleaned.txt'
+	# train_truth_filename = tumor_name + '/' + tumor_name + '_train_truth_cleaned.txt'
+	# train_data_filename = tumor_name + '/' + tumor_name + '_train_data_cleaned.txt'
+	# train_data_mask_filename = tumor_name + '/' + tumor_name + '_train_data_mask_cleaned.txt'
 
-	train_chrom_filename = tumor_name + '/' + tumor_name + '_train_chrom_cleaned.txt'
-	train_truth_filename = tumor_name + '/' + tumor_name + '_train_truth_cleaned.txt'
-	train_data_filename = tumor_name + '/' + tumor_name + '_train_data_cleaned.txt'
-	train_data_mask_filename = tumor_name + '/' + tumor_name + '_train_data_mask_cleaned.txt'
+	# val_chrom_filename = tumor_name + '/' + tumor_name + '_val_chrom_cleaned.txt'
+	# val_truth_filename = tumor_name + '/' + tumor_name + '_val_truth_cleaned.txt'
+	# val_data_filename = tumor_name + '/' + tumor_name + '_val_data_cleaned.txt'
+	# val_data_mask_filename = tumor_name + '/' + tumor_name + '_val_data_mask_cleaned.txt'
 
-	val_chrom_filename = tumor_name + '/' + tumor_name + '_val_chrom_cleaned.txt'
-	val_truth_filename = tumor_name + '/' + tumor_name + '_val_truth_cleaned.txt'
-	val_data_filename = tumor_name + '/' + tumor_name + '_val_data_cleaned.txt'
-	val_data_mask_filename = tumor_name + '/' + tumor_name + '_val_data_mask_cleaned.txt'
+	# Do not remove missing data points
+	train_chrom_filename = tumor_name + '/' + tumor_name + '_train_chrom.txt'
+	train_truth_filename = tumor_name + '/' + tumor_name + '_train_truth.txt'
+	train_data_filename = tumor_name + '/' + tumor_name + '_train_data.txt'
+	train_data_mask_filename = tumor_name + '/' + tumor_name + '_train_data_mask.txt'
+
+	val_chrom_filename = tumor_name + '/' + tumor_name + '_val_chrom.txt'
+	val_truth_filename = tumor_name + '/' + tumor_name + '_val_truth.txt'
+	val_data_filename = tumor_name + '/' + tumor_name + '_val_data.txt'
+	val_data_mask_filename = tumor_name + '/' + tumor_name + '_val_data_mask.txt'
 
 	np.savetxt(train_chrom_filename, clean_dataset[train_ind,0:2], fmt='%d', delimiter='\t', header='chrom\tloc', comments='#')
 	np.savetxt(train_truth_filename, clean_dataset[train_ind,2], fmt='%d', delimiter='\t', header='truth', comments='#')

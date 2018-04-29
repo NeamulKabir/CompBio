@@ -12,11 +12,11 @@ def getGenData(sample, index):
 
 
 
-tumor_names = ['real1','real2','syn1','syn2','syn3','syn4','syn5']
+# tumor_names = ['real1','real2','syn1','syn2','syn3','syn4','syn5']
 file_names = ['freebayes','mutect','vardict','varscan']
 
-# tumor_names = ['real2']
-# file_names = ['vardict']
+tumor_names = ['test']
+# file_names = ['varscan']
 
 for tumor_name in tumor_names:
 	for file_name in file_names:
@@ -1011,10 +1011,16 @@ for tumor_name in tumor_names:
 			# f_labels_file.write('GT_AD_REF\tGT_AD_ALT\tGT_ADJAF\tGT_AF\tGT_ALD_FOR\tGT_ALD_REV\tGT_AO\tGT_BIAS_REF\tGT_BIAS_ALT\tGT_BQ\tGT_DP\tGT_DP4_1\tGT_DP4_2\tGT_DP4_3\tGT_DP4_4\tGT_FREQ\tGT_GQ\tGT_HIAF\tGT_MQ\tGT_NM\tGT_ODDRATIO\tGT_PL1\tGT_PL2\tGT_PL3\tGT_PMEAN\tGT_PSTD\tGT_QA\tGT_QR\tGT_QSTD\tGT_QUAL\tGT_RD1\tGT_RD2\tGT_RO\tGT_SBF\tGT_SN\tGT_SS\tGT_VD\tQUAL\tAB\tABP\tAC\tAF\tAN\tAO\tBaseQRankSum\tDP\tDPB\tDPRA\tEPP\tEPPR\tFS\tGC\tGPV\tGTI\tHrun\tHaplotypeScore\tLEN\tMEANALT\tMQ\tMQ0\tMQM\tMQMR\tMQRankSum\tMSI\tMSILEN\tNS\tNUMALT\tODDS\tPAIRED\tPAIREDR\tPAO\tPQA\tPQR\tPRO\tQA\tQD\tQR\tRO\tRPL\tRPP\tRPPR\tRPR\tRUN\tReadPosRankSum\tSAF\tSAP\tSAR\tSOR\tSPV\tSRF\tSRP\tSRR\tSS\tSSC\tSSF\tCHROM\tPOS\t\n')
 			f_labels_file.write('GT_AD_REF\tGT_AD_ALT\tGT_ADJAF\tGT_AF\tGT_ALD_FOR\tGT_ALD_REV\tGT_BIAS_REF\tGT_BIAS_ALT\tGT_BQ\tGT_DP\tGT_DP4_1\tGT_DP4_2\tGT_DP4_3\tGT_DP4_4\tGT_FREQ\tGT_GQ\tGT_HIAF\tGT_MQ\tGT_NM\tGT_ODDRATIO\tGT_PL1\tGT_PL2\tGT_PL3\tGT_PMEAN\tGT_PSTD\tGT_QSTD\tGT_QUAL\tGT_RD1\tGT_RD2\tGT_RO\tGT_SBF\tGT_SN\tGT_SS\tGT_VD\tQUAL\tAB\tABP\tAC\tAF\tAN\tAO\tBaseQRankSum\tDP\tDPB\tDPRA\tEPP\tEPPR\tFS\tGC\tGPV\tGTI\tHrun\tHaplotypeScore\tLEN\tMEANALT\tMQ\tMQ0\tMQM\tMQMR\tMQRankSum\tMSI\tMSILEN\tNS\tNUMALT\tODDS\tPAIRED\tPAIREDR\tPAO\tPQA\tPQR\tPRO\tQA\tQD\tQR\tRO\tRPL\tRPP\tRPPR\tRPR\tRUN\tReadPosRankSum\tSAF\tSAP\tSAR\tSOR\tSPV\tSRF\tSRP\tSRR\tSS\tSSC\tSSF\tCHROM\tPOS\t\n')
 			for i in range(len(feature)):
+				if len(feature[i]) != len(feature[0]):
+					print('Error: i:{}, len:{}'.format(i,len(feature[i])))
 				for j in range(len(feature[0])):
 					f_labels_file.write('{}\t'.format(feature[i][j]))
 				f_labels_file.write('\n')
 
+		# print(len(feature))
+		# print(len(feature[0]))
+		# a=np.array(feature)
+		# print(a.shape)
 		featureArr2 = np.array(feature)[:,:-2]
 		featureArr = np.array(featureArr2, dtype=np.float)
 
